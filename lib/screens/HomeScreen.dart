@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
+// @Theme
+import 'package:workshop_twitter/theme/default/index.dart';
+
 // @Helpers
 import 'package:workshop_twitter/helpers/actionHelper.dart';
 
@@ -32,12 +35,16 @@ class HomeScreen extends StatelessWidget {
   void onScrollListener() {
     bool endReached = scrollController.offset == scrollController.position.maxScrollExtent;
     if(endReached) {
-      print('pangor');
       dispatchAction(timelineFetchNextPage, store);
     }
   }
 
+  void onRefresh() {
+    dispatchAction(timelineFetchTweets, store);
+  }
+
   Widget buildPaginationLoader(context, state) {
+
     if(state['isPaginating']) {
       return loadingSpinner();
     }
@@ -94,8 +101,16 @@ class HomeScreen extends StatelessWidget {
               },
               builder: getContent
             ),
-          ],
+          ]
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: onRefresh,
+        backgroundColor: ColorTheme.backgroundOverlay,
+        child: Icon(
+          Icons.refresh,
+          color: ColorTheme.backgroundIndicator,
+        )
       )
     );
   }
