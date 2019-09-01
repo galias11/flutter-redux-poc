@@ -4,6 +4,13 @@ Map<String, Map<String, String>> translations = {
     'appBarTitle': 'Flutter Twitter workshop'
   },
 
+  // @Search screen
+  'searchScreen': {
+    'listTile': 'Trends for you',
+    'search': 'Search',
+    'tweetsCount': '%s Tweets'
+  },
+
   // @Tweet details screen
   'tweetDetailsScreen': {
     'appBarTitle': 'Tweet',

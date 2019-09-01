@@ -7,6 +7,7 @@ import 'package:workshop_twitter/theme/default/index.dart';
 
 // @Screens
 import 'package:workshop_twitter/screens/HomeScreen.dart';
+import 'package:workshop_twitter/screens/SearchScreen.dart';
 
 // @Components
 import 'package:workshop_twitter/components/mainTabBar/MainTabBar.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
           body: TabBarView(
             children: [
               HomeScreen(),
-              Icon(Icons.directions_transit),
+              SearchScreen(),
               Icon(Icons.directions_bike),
             ],
           ),

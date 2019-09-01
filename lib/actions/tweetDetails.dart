@@ -1,9 +1,6 @@
 // @Action types
 import 'package:workshop_twitter/constants/actionTypes.dart';
 
-// @Constants
-import 'package:workshop_twitter/constants/constants.dart';
-
 // @Helpers
 import 'package:workshop_twitter/helpers/apiHelper.dart';
 import 'package:workshop_twitter/helpers/actionHelper.dart';

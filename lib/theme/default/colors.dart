@@ -15,6 +15,7 @@ class ColorTheme {
 
   static Color fontPrimary = Color(0xff000000);
   static Color fontDisabled = Color(0xffc0c0c0);
+  static Color fontGhost = Color(0xffffffff);
 
   static Color borderPrimary = Color(0xffc0c0c0);
 }

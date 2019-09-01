@@ -8,5 +8,6 @@ const String BASE_HOST = 'http://192.168.0.187:8080';
 // @Endpoints
 const Map ENDPOINTS = {
   'TIMELINE': '/timeline',
+  'TRENDS': '/trends',
   'TWEET_DETAILS': '/show'
 };
