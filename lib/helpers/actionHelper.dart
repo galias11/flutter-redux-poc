@@ -1,3 +1,6 @@
+// @Reducers
+import 'package:workshop_twitter/reducers/index.dart';
+
 Map actionBuilder({
   String type,
   Map payload
@@ -6,6 +9,10 @@ Map actionBuilder({
   'payload': payload
 });
 
-void dispatchAction(dynamic action, dynamic store) {
-  action(store)();
+void dispatchAction(dynamic action, {Map args}) {
+  if(args == null) {
+    action(tweetsStore)();
+    return;
+  }
+  action(tweetsStore, args: args)();
 }

@@ -1,3 +1,6 @@
+// @Vendors
+import 'package:intl/intl.dart';
+
 // @Constants
 import 'package:workshop_twitter/constants/constants.dart';
 
@@ -17,4 +20,9 @@ String getTimeEllapsedText(DateTime creationTime) {
   }
   final int daysEllapsed = timeDiff.inDays;
   return '$daysEllapsed$ELLAPSED_TIME_DAY';
+}
+
+String formatDate(DateTime date) {
+  DateFormat formatter = new DateFormat('h:mm a dd MMM. yy');
+  return formatter.format(date);
 }

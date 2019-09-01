@@ -8,6 +8,7 @@ DateFormat format = new DateFormat(TWEET_DEFAULT_DATE_FORMAT);
 
 class TimelineTweet {
   int _id;
+  String _strId;
   String _avatarSource;
   String _publisherName;
   String _publisherSource;
@@ -18,6 +19,7 @@ class TimelineTweet {
   int _retweetCounter;
 
   int get id => this._id;
+  String get strId => this._strId;
   String get avatarSource => this._avatarSource;
   String get publisherName => this._publisherName;
   String get publisherSource => this._publisherSource;
@@ -31,6 +33,7 @@ class TimelineTweet {
     final String publisherName = tweetData['user']['screen_name'];
     final List media = tweetData['entities']['media'];
     this._id = int.parse(tweetData['id_str']) - 1;
+    this._strId = tweetData['id_str'];
     this._avatarSource = tweetData['user']['profile_image_url'];
     this._publisherName = publisherName;
     this._publisherSource = '@$publisherName';

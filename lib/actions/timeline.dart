@@ -37,10 +37,10 @@ dynamic timelineFetchTweets = (store) {
 
 dynamic timelineFetchNextPage = (store) {
   return () async {
-    if(store.state['isFetching'] || store.state['isFetchingNextPage']) {
+    if(store.state.timeline['isFetching'] || store.state.timeline['isFetchingNextPage']) {
       return;
     }
-    int lastId = store.state['lastId'];
+    int lastId = store.state.timeline['lastId'];
     String url = buildUrl(endpointKey: 'TIMELINE', query: { 'count': TIMELINE_PAGE_SIZE, 'max_id': lastId });
     store.dispatch(actionBuilder(type: TIMELINE_REQUEST_NEXT_PAGE_PERFORMED));
     Map response = await apiGet(url);

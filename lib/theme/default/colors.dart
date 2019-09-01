@@ -11,6 +11,7 @@ class ColorTheme {
   static Color iconFavorite = Color(0xfffa48d6);
   static Color iconRetweet = Color(0xff47e64f);
   static Color iconComment = Color(0xff0397d5);
+  static Color iconGhost = Color(0xffffffff);
 
   static Color fontPrimary = Color(0xff000000);
   static Color fontDisabled = Color(0xffc0c0c0);

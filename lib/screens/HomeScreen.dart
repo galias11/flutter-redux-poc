@@ -3,44 +3,55 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
+// @Reducers
+import 'package:workshop_twitter/reducers/index.dart';
+
+// @Screens
+import 'package:workshop_twitter/screens/TweetDetailsScreen.dart';
+
 // @Theme
 import 'package:workshop_twitter/theme/default/index.dart';
 
 // @Helpers
 import 'package:workshop_twitter/helpers/actionHelper.dart';
+import 'package:workshop_twitter/helpers/navigationHelper.dart';
 
 // @Components
 import 'package:workshop_twitter/components/loadingSpinner/LoadingSpinner.dart';
 import 'package:workshop_twitter/components/tweetTimelineCard/TweetTimelineCard.dart';
 
 // @Actions
-import 'package:workshop_twitter/actions/timeline.dart';
+import 'package:workshop_twitter/actions/timeline.dart' as timelineActions;
+import 'package:workshop_twitter/actions/tweetDetails.dart' as tweetDetailsActions;
 
 class HomeScreen extends StatelessWidget {
-  final Store<Map> store;
-  final String title;
   final ScrollController scrollController = ScrollController(
      initialScrollOffset: 0.0,
      keepScrollOffset: true
   );
 
-  HomeScreen({Key key, this.title, this.store}) : super(key: key) {
+  HomeScreen({Key key}) : super(key: key) {
     scrollController.addListener(this.onScrollListener);
   }
 
-  void initScreen() {
-    dispatchAction(timelineFetchTweets, store);
+  void initScreen(Store<AppState> store) {
+    dispatchAction(timelineActions.timelineFetchTweets);
   }
 
   void onScrollListener() {
     bool endReached = scrollController.offset == scrollController.position.maxScrollExtent;
     if(endReached) {
-      dispatchAction(timelineFetchNextPage, store);
+      dispatchAction(timelineActions.timelineFetchNextPage);
     }
   }
 
   void onRefresh() {
-    dispatchAction(timelineFetchTweets, store);
+    dispatchAction(timelineActions.timelineFetchTweets);
+  }
+
+  void onTapTweet(BuildContext context, String tweetId) {
+    dispatchAction(tweetDetailsActions.selecteTweet, args: {'tweetId': tweetId});
+    navigate(context, new TweetDetailsScreen());
   }
 
   Widget buildPaginationLoader(context, state) {
@@ -70,7 +81,10 @@ class HomeScreen extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: state['tweetData'].length,
                   itemBuilder: (context, int index) {
-                    return TimelineCard(tweet: state['tweetData'][index]);
+                    return TimelineCard(
+                      onPress: onTapTweet,
+                      tweet: state['tweetData'][index]
+                    );
                   }
                 )
               )
@@ -85,19 +99,19 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    initScreen();
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            StoreConnector<Map, Map>(
+            StoreConnector<AppState, Map>(
+              onInit: initScreen,
               converter: (store) => {
-                'tweetCount': store.state['tweetCount'].toString(),
-                'isFetching': store.state['isFetching'],
-                'isPaginating': store.state['isFetchingNextPage'],
-                'fetchSuccess': store.state['fetchSuccess'],
-                'tweetData': store.state['tweetData']
+                'tweetCount': store.state.timeline['tweetCount'].toString(),
+                'isFetching': store.state.timeline['isFetching'],
+                'isPaginating': store.state.timeline['isFetchingNextPage'],
+                'fetchSuccess': store.state.timeline['fetchSuccess'],
+                'tweetData': store.state.timeline['tweetData']
               },
               builder: getContent
             ),

@@ -13,13 +13,19 @@ class FontTheme {
 
   static TextStyle fontTitleSecondary = new TextStyle(
     color: ColorTheme.fontDisabled,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: FontWeight.w600
   );
 
   static TextStyle fontBodyPrimary = new TextStyle(
     color: ColorTheme.fontPrimary,
     fontSize: 14,
+    fontWeight: FontWeight.w400
+  );
+
+  static TextStyle fontBodySection = new TextStyle(
+    color: ColorTheme.fontPrimary,
+    fontSize: 16,
     fontWeight: FontWeight.w400
   );
 }

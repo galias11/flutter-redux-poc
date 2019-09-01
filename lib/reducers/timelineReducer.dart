@@ -1,7 +1,3 @@
-// @Vendors
-import 'package:redux/redux.dart';
-import 'package:redux_thunk/redux_thunk.dart';
-
 // @Model
 import 'package:workshop_twitter/model/TimelineTweet.dart';
 
@@ -39,7 +35,7 @@ Map mapTimelineData({
   return { 'list': currentList, 'lastId': lastId };
 }
 
-Map tweetsReducer(Map state, dynamic action) {
+Map timelineReducer(Map state, dynamic action) {
   Map nextState = deepCloneMap(state);
   String actionType = action['type'];
   switch(actionType) {
@@ -88,9 +84,3 @@ Map tweetsReducer(Map state, dynamic action) {
       return state;
   }
 }
-
-final tweetsStore = new Store<Map>(
-  tweetsReducer,
-  middleware: [thunkMiddleware],
-  initialState: initialState()
-);

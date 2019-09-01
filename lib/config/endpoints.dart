@@ -1,7 +1,12 @@
 // @Base host
-const String BASE_HOST = 'http://127.0.0.1:8080';
+/*
+This has to be replaced when changing network.
+For IOS simulator loopback can be used.
+*/
+const String BASE_HOST = 'http://192.168.0.187:8080';
 
 // @Endpoints
 const Map ENDPOINTS = {
-  'TIMELINE': '/timeline'
+  'TIMELINE': '/timeline',
+  'TWEET_DETAILS': '/show'
 };
