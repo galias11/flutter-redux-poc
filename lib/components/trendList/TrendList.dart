@@ -1,9 +1,6 @@
 // @Vendors
 import 'package:flutter/material.dart';
 
-// @Model
-import 'package:workshop_twitter/model/Trend.dart';
-
 // @Components
 import 'package:workshop_twitter/components/trendCard/TrendCard.dart';
 

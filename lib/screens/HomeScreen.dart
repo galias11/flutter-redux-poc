@@ -55,7 +55,6 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget buildPaginationLoader(context, state) {
-
     if(state['isPaginating']) {
       return loadingSpinner();
     }

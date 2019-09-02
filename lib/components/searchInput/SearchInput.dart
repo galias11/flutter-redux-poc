@@ -8,13 +8,25 @@ import 'package:workshop_twitter/theme/default/index.dart';
 import 'package:workshop_twitter/config/lang/i18n.dart';
 
 class SearchInput extends StatelessWidget {
-  Widget buildInput() {
+  final TextEditingController textfieldController;
+  final Function onPerformSearch;
+  final Function onChangeSearchValue;
+
+  SearchInput({
+    @required this.textfieldController,
+    @required this.onPerformSearch,
+    @required this.onChangeSearchValue
+  });
+
+  Widget buildInput(BuildContext context) {
     return new  Expanded(
       flex: 7,
       child: Container(
         padding: EdgeInsets.only(right: 10.0),
         height: 50,
         child: TextField(
+          controller: textfieldController,
+          onChanged: onChangeSearchValue,
           maxLines: 1,
           textAlignVertical: TextAlignVertical.bottom,
           decoration: new InputDecoration(
@@ -49,7 +61,7 @@ class SearchInput extends StatelessWidget {
         padding: EdgeInsets.only(left: 10.0),
         child: RaisedButton(
           color: ColorTheme.backgroundIndicator,
-          onPressed: (){},
+          onPressed: onPerformSearch,
           child: Text(
             getTranslation('searchScreen', 'search'),
             style: FontTheme.buttonGhost
@@ -70,7 +82,7 @@ class SearchInput extends StatelessWidget {
       ),
       child: Row(
         children: <Widget>[
-          buildInput(),
+          buildInput(context),
           buildButton()
         ],
       )

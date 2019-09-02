@@ -15,7 +15,8 @@ String buildQuery(Map query) {
     return queryString;
   }
   query.forEach((key, value) {
-    queryString += (isFirst ? QUERY_BASE_CHAR : QUERY_CAT_STRING) + '$key=$value';
+    String encodedValue = Uri.encodeComponent(value.toString());
+    queryString += (isFirst ? QUERY_BASE_CHAR : QUERY_CAT_STRING) + '$key=$encodedValue';
     isFirst = false;
   });
   return queryString;
