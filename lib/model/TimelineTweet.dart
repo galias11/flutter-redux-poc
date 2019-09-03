@@ -17,6 +17,7 @@ class TimelineTweet {
   String _imageSource;
   int _favCounter;
   int _retweetCounter;
+  Map<String, bool> _filteringParams;
 
   int get id => this._id;
   String get strId => this._strId;
@@ -28,6 +29,7 @@ class TimelineTweet {
   String get imageSource => this._imageSource;
   int get favCounter => this._favCounter;
   int get retweetCounter => this._retweetCounter;
+  Map<String, bool> get filteringParamss => this._filteringParams;
 
   TimelineTweet(tweetData) {
     final String publisherName = tweetData['user']['screen_name'];
@@ -42,5 +44,24 @@ class TimelineTweet {
     this._imageSource = media != null ? media[0]['media_url'] : null;
     this._favCounter = tweetData['favorite_count'];
     this._retweetCounter = tweetData['retweet_count'];
+    this._filteringParams = {
+      'verified': tweetData['user']['verified'],
+      'following': tweetData['user']['following'],
+      'defaultProfile': tweetData['user']['default_profile'],
+      'links': tweetData['entities']['urls'] != null && tweetData['entities']['urls'].length > 0,
+      'truncated': tweetData['truncated']
+    };
+  }
+
+  bool shouldFilterTweet(List<String> activeFilters) {
+    bool shouldFilter = false;
+    print(this._filteringParams);
+    activeFilters.forEach((filter) {
+      if(this._filteringParams[filter]) {
+        shouldFilter = true;
+        return;
+      }
+    });
+    return shouldFilter;
   }
 }

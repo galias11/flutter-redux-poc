@@ -11,6 +11,16 @@ Map<String, Map<String, String>> translations = {
     'tweetsCount': '%s Tweets'
   },
 
+  // @Settings screen
+  'settingsSreen': {
+    'filtersTitle': 'Filter tweets in timeline from...',
+    'notVerifiedFilter': 'People who have not verified the account',
+    'notFollowingFilter': 'People who do not follow',
+    'notDefaultProfileFilter': 'People who have default profile information',
+    'notLinksFilter': 'Tweets that contains a link',
+    'notTruncatedFilter': 'Tweets that has text truncated'
+  },
+
   // @Tweet details screen
   'tweetDetailsScreen': {
     'appBarTitle': 'Tweet',

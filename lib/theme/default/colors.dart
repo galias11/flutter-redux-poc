@@ -5,6 +5,7 @@ class ColorTheme {
   static Color backgroundPrimary = Color(0xffffffff);
   static Color backgroundSecondary = Color(0xff0f2d3f);
   static Color backgroundIndicator = Color(0xff0397d5);
+  static Color backgroundTitleTag = Color(0xff6080b5);
   static Color backgroundOverlay = Color(0xccffffff);
 
   static Color iconPrimary = Color(0x800f2d3f);

@@ -57,3 +57,10 @@ dynamic timelineFetchNextPage = (store) {
     }
   };
 };
+
+dynamic toggleFilterEnabled = (store, {Map args}) {
+  return () async {
+    store.dispatch(actionBuilder(type: TIMELINE_TOGGLE_FILTER, payload: {'filterId': args['filterId']}));
+    timelineFetchTweets(store);
+  };
+};

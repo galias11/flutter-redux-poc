@@ -8,6 +8,7 @@ import 'package:workshop_twitter/theme/default/index.dart';
 // @Screens
 import 'package:workshop_twitter/screens/HomeScreen.dart';
 import 'package:workshop_twitter/screens/SearchScreen.dart';
+import 'package:workshop_twitter/screens/SettingsScreen.dart';
 
 // @Components
 import 'package:workshop_twitter/components/mainTabBar/MainTabBar.dart';
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
             children: [
               HomeScreen(),
               SearchScreen(),
-              Icon(Icons.directions_bike),
+              SettingsScreen()
             ],
           ),
         ),

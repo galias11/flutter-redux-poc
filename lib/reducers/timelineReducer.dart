@@ -15,11 +15,29 @@ Map initialState() {
     'isFetchingNextPage': false,
     'fetchError': false,
     'fetchSuccess': false,
-    'tweetData': new List()
+    'tweetData': new List(),
+    'filtersState': {
+      'verified': false,
+      'following': false,
+      'defaultProfile': false,
+      'links': false,
+      'truncated': false
+    }
   };
 }
 
+List<String> buildActiveFiltersList(Map filtersState) {
+  List<String> activeFiltersList = new List<String>();
+  filtersState.forEach((key, value) {
+    if(value) {
+      activeFiltersList.add(key);
+    }
+  });
+  return activeFiltersList;
+}
+
 Map mapTimelineData({
+  List activeFilters,
   List currentList,
   List newData
 }) {
@@ -29,8 +47,10 @@ Map mapTimelineData({
   }
   newData.forEach((tweetData) {
     TimelineTweet tweet = new TimelineTweet(tweetData);
-    currentList.add(tweet);
-    lastId = tweet.id;
+    if(!tweet.shouldFilterTweet(activeFilters)){
+      currentList.add(tweet);
+      lastId = tweet.id;
+    }
   });
   return { 'list': currentList, 'lastId': lastId };
 }
@@ -54,6 +74,7 @@ Map timelineReducer(Map state, dynamic action) {
       return nextState;
     case TIMELINE_REQUEST_SUCCESS:
       Map timeLineData =  mapTimelineData(
+        activeFilters: buildActiveFiltersList(nextState['filtersState']),
         currentList: nextState['tweetData'],
         newData: action['payload']['data']
       );
@@ -72,6 +93,7 @@ Map timelineReducer(Map state, dynamic action) {
       return nextState;
     case TIMELINE_REQUEST_NEXT_PAGE_SUCCESS:
       Map timeLineData =  mapTimelineData(
+        activeFilters: buildActiveFiltersList(nextState['filtersState']),
         currentList: nextState['tweetData'],
         newData: action['payload']['data']
       );
@@ -79,6 +101,11 @@ Map timelineReducer(Map state, dynamic action) {
       nextState['fetchSuccess'] = true;
       nextState['tweetData'] = timeLineData['list'];
       nextState['lastId'] = timeLineData['lastId'];
+      return nextState;
+    case TIMELINE_TOGGLE_FILTER:
+      String filterId = action['payload']['filterId'];
+      nextState['filtersState'][filterId] = !nextState['filtersState'][filterId];
+      print(nextState['filtersState']);
       return nextState;
     default:
       return state;
