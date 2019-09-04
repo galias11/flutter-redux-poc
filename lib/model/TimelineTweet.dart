@@ -55,7 +55,6 @@ class TimelineTweet {
 
   bool shouldFilterTweet(List<String> activeFilters) {
     bool shouldFilter = false;
-    print(this._filteringParams);
     activeFilters.forEach((filter) {
       if(this._filteringParams[filter]) {
         shouldFilter = true;

@@ -13,6 +13,7 @@ import 'package:workshop_twitter/helpers/actionHelper.dart';
 import 'package:workshop_twitter/components/regularAppBar/RegularAppBar.dart';
 import 'package:workshop_twitter/components/tweetDetails/TweetDetails.dart';
 import 'package:workshop_twitter/components/loadingSpinner/LoadingSpinner.dart';
+import 'package:workshop_twitter/components/emptyState/EmptyState.dart';
 
 // @Actions
 import 'package:workshop_twitter/actions/tweetDetails.dart' as tweetDetailsActions;
@@ -39,7 +40,7 @@ class TweetDetailsScreen extends StatelessWidget {
     if(state['fetchSuccess']) {
       return new TweetDetails(tweet: state['tweetData']);
     }
-    return new Container();
+    return new EmptyState(message: getTranslation('tweetDetailsScreen', 'error'));
   }
 
   @override

@@ -1,12 +1,16 @@
 Map<String, Map<String, String>> translations = {
   // @Home screen
   'homeScreen': {
-    'appBarTitle': 'Flutter Twitter workshop'
+    'appBarTitle': 'Flutter Twitter workshop',
+    'emptyStateError': 'An error has ocurred. Please try again in some minutes.',
+    'emptyStateNoData': 'No tweets were found.'
   },
 
   // @Search screen
   'searchScreen': {
+    'error': 'An error has ocurred. Please try again in some minutes.',
     'listTile': 'Trends for you',
+    'noDataError': 'No tweets were found for the current search',
     'search': 'Search',
     'tweetsCount': '%s Tweets'
   },
@@ -24,6 +28,7 @@ Map<String, Map<String, String>> translations = {
   // @Tweet details screen
   'tweetDetailsScreen': {
     'appBarTitle': 'Tweet',
+    'error': 'An error has ocurred. Please try again in some minutes.',
     'favCount': 'Like %s',
     'retweetCount': 'Retweets %s'
   }

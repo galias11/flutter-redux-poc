@@ -19,10 +19,14 @@ import 'package:workshop_twitter/helpers/navigationHelper.dart';
 // @Components
 import 'package:workshop_twitter/components/loadingSpinner/LoadingSpinner.dart';
 import 'package:workshop_twitter/components/tweetTimelineCard/TweetTimelineCard.dart';
+import 'package:workshop_twitter/components/emptyState/EmptyState.dart';
 
 // @Actions
 import 'package:workshop_twitter/actions/timeline.dart' as timelineActions;
 import 'package:workshop_twitter/actions/tweetDetails.dart' as tweetDetailsActions;
+
+// @i18n
+import 'package:workshop_twitter/config/lang/i18n.dart';
 
 class HomeScreen extends StatelessWidget {
   final ScrollController scrollController = ScrollController(
@@ -65,41 +69,44 @@ class HomeScreen extends StatelessWidget {
     if(state['isFetching']) {
       return loadingSpinner();
     }
-    if(state['fetchSuccess'] == true) {
-      return  Expanded(
-        flex: 1,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Padding(
-                padding: EdgeInsets.all(15.0),
-                child: ListView.builder(
-                  controller: scrollController,
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: state['tweetData'].length,
-                  itemBuilder: (context, int index) {
-                    return TimelineCard(
-                      onPress: onTapTweet,
-                      tweet: state['tweetData'][index]
-                    );
-                  }
-                )
-              )
-            ),
-            buildPaginationLoader(context, state)
-          ]
-        )
-      );
+    if(state['fetchError'] == true) {
+      return EmptyState(message: getTranslation('homeScreen', 'emptyStateError'));
     }
-    return Row();
+    if(state['fetchSuccess'] == true && state['tweetData'].length == 0) {
+      return EmptyState(message: getTranslation('homeScreen', 'emptyStateNoData'));
+    }
+    return  Expanded(
+      flex: 1,
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ListView.builder(
+                controller: scrollController,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: state['tweetData'].length,
+                itemBuilder: (context, int index) {
+                  return TimelineCard(
+                    onPress: onTapTweet,
+                    tweet: state['tweetData'][index]
+                  );
+                }
+              )
+            )
+          ),
+          buildPaginationLoader(context, state)
+        ]
+      )
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -109,6 +116,7 @@ class HomeScreen extends StatelessWidget {
                 'tweetCount': store.state.timeline['tweetCount'].toString(),
                 'isFetching': store.state.timeline['isFetching'],
                 'isPaginating': store.state.timeline['isFetchingNextPage'],
+                'fetchError': store.state.timeline['fetchError'],
                 'fetchSuccess': store.state.timeline['fetchSuccess'],
                 'tweetData': store.state.timeline['tweetData']
               },

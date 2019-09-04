@@ -105,7 +105,6 @@ Map timelineReducer(Map state, dynamic action) {
     case TIMELINE_TOGGLE_FILTER:
       String filterId = action['payload']['filterId'];
       nextState['filtersState'][filterId] = !nextState['filtersState'][filterId];
-      print(nextState['filtersState']);
       return nextState;
     default:
       return state;

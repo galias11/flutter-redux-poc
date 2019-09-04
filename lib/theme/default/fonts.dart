@@ -46,4 +46,10 @@ class FontTheme {
     fontSize: 14,
     fontWeight: FontWeight.w600
   );
+
+  static TextStyle fontEmptyState = new TextStyle(
+    color: ColorTheme.fontDisabled,
+    fontSize: 16,
+    fontWeight: FontWeight.w400
+  );
 }

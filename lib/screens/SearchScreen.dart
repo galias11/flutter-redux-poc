@@ -21,11 +21,15 @@ import 'package:workshop_twitter/components/loadingSpinner/LoadingSpinner.dart';
 import 'package:workshop_twitter/components/trendList/TrendList.dart';
 import 'package:workshop_twitter/components/searchInput/SearchInput.dart';
 import 'package:workshop_twitter/components/searchResultsList/SearchResultsList.dart';
+import 'package:workshop_twitter/components/emptyState/EmptyState.dart';
 
 // @Actions
 import 'package:workshop_twitter/actions/trends.dart' as trendActions;
 import 'package:workshop_twitter/actions/search.dart' as searchActions;
 import 'package:workshop_twitter/actions/tweetDetails.dart' as tweetDetailsActions;
+
+// @i18n
+import 'package:workshop_twitter/config/lang/i18n.dart';
 
 class SearchScreen extends StatelessWidget {
   SearchScreen({Key key}) : super(key: key);
@@ -55,6 +59,7 @@ class SearchScreen extends StatelessWidget {
   }
 
   Widget buildInnerContent(BuildContext context, state) {
+    String emptyStateTranlationKey = 'error';
     if(state['isFetching'] || state['searchIsFetching']) {
       return Expanded(
         flex: 1,
@@ -63,16 +68,19 @@ class SearchScreen extends StatelessWidget {
         )
       );
     }
-    if(!state['searchPerformed'] && state['fetchSuccess']) {
+    if(!state['searchPerformed'] && state['fetchSuccess'] && state['trendsData'].length > 0) {
       return  TrendList(state: state);
     }
-    if(state['searchPerformed'] && state['searchSuccess']) {
+    if(state['searchPerformed'] && state['searchSuccess'] && state['searchResults'].length > 0) {
       return SearchResultsList(
         onPress: handleTapTweet,
         state: state
       );
     }
-    return new Container();
+    if(state['searchSuccess']) {
+      emptyStateTranlationKey = 'noDataError';
+    }
+    return new EmptyState(message: getTranslation('searchScreen', emptyStateTranlationKey));
   }
 
   Widget buildContent(BuildContext context, state) {
@@ -107,7 +115,9 @@ class SearchScreen extends StatelessWidget {
                 'searchPerformed': store.state.search['searchPerformed'],
                 'searchResults': store.state.search['tweetsData'],
                 'isFetching': store.state.trends['isFetching'],
+                'searchFetchError': store.state.search['fetchError'],
                 'fetchSuccess': store.state.trends['fetchSuccess'],
+                'trendsFetchError': store.state.trends['fetchError'],
                 'trendsData': store.state.trends['trendsData']
               },
               builder: buildContent
